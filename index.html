@@ -9,6 +9,7 @@
         .container{ position: relative; width:1200px; overflow:hidden; background-color:coral;}
         .box_slide{position:relative; left:0; height:200px; transition: none;}
         .box_slide.left{left:-320px; transition: left 0.5s}
+        .box_slide.right{left:320px; transition: left 0.5s}
         .slide{ position:absolute; width:300px; height:200px; background-color:darkolivegreen; padding: 10px; font-size: 30px; color: #fff; box-sizing: border-box;}
         .slide:nth-child(2){background: blueviolet;}
         .slide:nth-child(3){background: brown;}
@@ -156,9 +157,15 @@
             }
         })
 
-        $('.btn_left').on('click', function asd(){
+        $('.btn_left').on('click', function(){
             if(FLAG_TRANSITION === true){
-                
+                FLAG_TRANSITION = false;
+                $('.box_slide').addClass('right').one('transitionend', function(){
+                    s.pop_in('left', s.pop_out('right'));
+                    render(s);
+                    $(this).removeClass('right');
+                    FLAG_TRANSITION = true;
+                })
             }
         })
 
